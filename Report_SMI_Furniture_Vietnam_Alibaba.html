@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SMI Furniture 2026 — Wood Furniture Industry &amp; Product Groups Report</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+    :root {
+      --p: #002B5B; --s: #1F75FE; --g: #D4A017; --bg: #F8F9FA; --text: #2C3E50;
+      --sidebar-bg: #07162C; --card-bg: #FFFFFF; --sw: 260px; --border-radius: 12px; --transition: all 0.3s ease;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { overflow-x: hidden; max-width: 100vw; scroll-behavior: smooth; }
+    body { font-family: 'Lexend', sans-serif; background-color: var(--bg); color: var(--text); line-height: 1.6; }
+    img { max-width: 100%; height: auto; }
+    canvas { max-width: 100% !important; display: block; margin: 0 auto; }
+    .sidebar { position: fixed; top: 0; left: 0; width: var(--sw); height: 100vh; background: linear-gradient(180deg, var(--sidebar-bg) 0%, var(--p) 100%); color: #fff; padding: 2rem 1.5rem; overflow-y: auto; z-index: 100; box-shadow: 4px 0 15px rgba(0,0,0,0.1); }
+    .brand { display: flex; align-items: center; gap: 10px; font-size: 1.25rem; font-weight: 700; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .brand i { color: var(--g); }
+    .sidebar nav ul { list-style: none; }
+    .sidebar nav ul li { margin-bottom: 0.5rem; }
+    .sidebar nav ul li a { display: flex; align-items: center; gap: 12px; color: rgba(255,255,255,0.8); text-decoration: none; padding: 0.75rem 1rem; border-radius: var(--border-radius); font-size: 0.95rem; font-weight: 600; transition: var(--transition); }
+    .sidebar nav ul li a:hover, .sidebar nav ul li a.active { color: #fff; background-color: rgba(255,255,255,0.06); border-left: 4px solid var(--g); }
+    .main-content { margin-left: var(--sw); width: calc(100% - var(--sw)); padding: 2.5rem 3rem; max-width: 1400px; position: relative; }
+    .header-banner { background: linear-gradient(135deg, rgba(7, 22, 44, 0.9) 0%, rgba(0, 43, 91, 0.75) 100%), url('https://smifurniture.com/upload/photo/banner-websiet-1920x800px-1767418976.webp') no-repeat center center; background-size: cover; padding: 4rem 2.5rem; border-radius: var(--border-radius); position: relative; margin-bottom: 2rem; box-shadow: 0 8px 25px rgba(0,43,91,0.15); min-height: 280px; display: flex; flex-direction: column; justify-content: center; }
+    .badge { display: inline-block; background-color: var(--g); color: #07162C; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; padding: 0.35rem 0.9rem; border-radius: 50px; margin-bottom: 1rem; width: fit-content; }
+    .title { font-size: 2.3rem; font-weight: 800; margin-bottom: 0.5rem; line-height: 1.3; color: #fff; }
+    .meta { display: flex; flex-wrap: wrap; gap: 20px; font-size: 0.85rem; color: rgba(255,255,255,0.9); border-top: 1px solid rgba(255,255,255,0.2); padding-top: 1rem; margin-top: 1.5rem; }
+    .section-card { background-color: var(--card-bg); border-radius: var(--border-radius); padding: 2.5rem; margin-bottom: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.02); border: 1px solid rgba(0,0,0,0.02); width: 100%; }
+    .section-title { font-size: 1.4rem; font-weight: 700; color: var(--p); margin-bottom: 1.25rem; display: flex; align-items: center; gap: 10px; border-bottom: 2px solid var(--bg); padding-bottom: 0.75rem; }
+    .section-title i { color: var(--g); }
+    .sub-title { font-size: 1.15rem; font-weight: 700; color: var(--p); margin: 2rem 0 1rem 0; border-left: 4px solid var(--g); padding-left: 10px; }
+    p { margin-bottom: 1rem; color: #576574; }
+    .highlight { background-color: #F0F4F8; border-left: 4px solid var(--s); padding: 1rem 1.25rem; border-radius: 0 var(--border-radius) var(--border-radius) 0; margin-bottom: 1.25rem; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem; width: 100%; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 1.5rem; width: 100%; }
+    .info-card { background-color: var(--bg); border-radius: var(--border-radius); padding: 1.5rem; border: 1px solid rgba(0,0,0,0.04); transition: var(--transition); }
+    .info-val { font-size: 1.6rem; font-weight: 800; color: var(--p); }
+    .info-lbl { font-size: 0.85rem; font-weight: 600; color: var(--s); margin-top: 0.35rem; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; font-size: 0.85rem; }
+    table th { background-color: var(--p); color: #fff; font-weight: 600; text-align: left; padding: 0.8rem 1rem; border: 1px solid rgba(0,0,0,0.05); }
+    table td { padding: 0.8rem 1rem; border: 1px solid rgba(0,0,0,0.05); vertical-align: middle; }
+    table tr:nth-child(even) { background-color: #F8FAFC; }
+    .table-container { overflow-x: auto; margin-top: 1rem; border-radius: 8px; border: 1px solid rgba(0,0,0,0.08); width: 100%; }
+    .link-store-btn { display: inline-flex; align-items: center; justify-content: center; background-color: #8B4513; color: white !important; padding: 0.5rem 0.8rem; border-radius: 4px; text-decoration: none; font-weight: 600; font-size: 0.75rem; white-space: nowrap; }
+    /* CHARTS - POLISHED LAYOUT */
+    .market-chart-grid { display: grid; grid-template-columns: minmax(360px, 0.9fr) minmax(480px, 1.1fr); gap: 1.5rem; margin: 1.5rem 0 2rem; align-items: stretch; }
+    .chart-box { background: linear-gradient(180deg, #FFFFFF 0%, #FBFCFF 100%); border: 1px solid rgba(0,43,91,0.08); border-radius: 18px; padding: 1.5rem 1.5rem 1.1rem; width: 100%; min-height: 430px; position: relative; box-shadow: 0 12px 30px rgba(0,43,91,0.06); overflow: hidden; }
+    .chart-box::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 5px; background: linear-gradient(90deg, var(--g), var(--s)); }
+    .chart-box canvas { width: 100% !important; height: 330px !important; }
+    .chart-box.wide { min-height: 420px; margin-top: 1.2rem; }
+    .chart-box.wide canvas { height: 320px !important; }
+    .chart-insight { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-bottom: 1.2rem; }
+    .insight-pill { background: #F4F7FB; border: 1px solid rgba(0,43,91,0.06); border-radius: 12px; padding: 0.9rem 1rem; }
+    .insight-pill strong { display: block; font-size: 1.35rem; color: var(--p); line-height: 1.1; }
+    .insight-pill span { font-size: 0.78rem; color: #6B7280; font-weight: 600; }
+    .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin: 1.2rem 0 1.5rem; }
+    .potential-box { background: #FFF8E5; border: 1px solid rgba(212,160,23,0.25); border-left: 5px solid var(--g); border-radius: 14px; padding: 1.2rem 1.4rem; }
+    .potential-box h4 { color: var(--p); margin-bottom: 0.55rem; font-size: 1rem; }
+    .potential-box p { margin-bottom: 0; font-size: 0.9rem; }
+    /* RFQ & Personas */
+    .rfq-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-top: 1.5rem; }
+    .rfq-card { background-color: var(--card-bg); border-radius: var(--border-radius); padding: 1.5rem; border: 1px solid rgba(0,0,0,0.06); border-top: 4px solid var(--g); box-shadow: 0 4px 12px rgba(0,0,0,0.04); transition: all 0.3s ease; display: flex; flex-direction: column; gap: 0.8rem; }
+    .rfq-title { font-size: 1.05rem; font-weight: 700; color: var(--p); line-height: 1.4; }
+    .rfq-desc { font-size: 0.88rem; color: #576574; line-height: 1.6; word-wrap: break-word; text-align: justify; }
+    .rfq-img { width: 100%; height: 200px; object-fit: cover; border-radius: 8px; border: 1px solid rgba(0,0,0,0.06); }
+    .persona-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 1.5rem; }
+    .persona-card { background-color: #F8F9FA; padding: 1.8rem; border-radius: 12px; border-top: 4px solid var(--s); box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+    .persona-card h4 { color: var(--p); margin-bottom: 1rem; font-size: 1.1rem; }
+    .persona-card ul { list-style: none; padding-left: 0; font-size: 0.85rem; color: #576574; }
+    .persona-card li { margin-bottom: 0.6rem; display: flex; align-items: flex-start; gap: 8px; }
+    .persona-card li::before { content: '\2714'; color: var(--s); font-weight: bold; }
+    /* Strategy & Research */
+    .strategy-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin: 1.5rem 0 1.75rem; }
+    .strategy-card { background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%); border: 1px solid rgba(0,43,91,0.08); border-radius: 14px; padding: 1.25rem; box-shadow: 0 6px 18px rgba(0,0,0,0.035); }
+    .strategy-no { display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px; border-radius:50%; background: rgba(31,117,254,0.10); color: var(--s); font-weight:800; font-size:0.82rem; margin-bottom:0.75rem; }
+    .strategy-card h4 { color: var(--p); font-size: 1rem; margin-bottom: 0.55rem; }
+    .strategy-card p { font-size: 0.86rem; margin-bottom: 0; color: #576574; }
+    .strategy-highlight { margin-top: 0.5rem; }
+    .research-notes { margin-top: 2rem; padding: 1.6rem; background: #F0F4F8; border-left: 4px solid var(--p); border-radius: 12px; }
+    .research-notes h3 { color: var(--p); font-size: 1.08rem; margin-bottom: 1rem; display:flex; align-items:center; gap:8px; }
+    .source-table a { color: var(--s); font-weight: 700; text-decoration: none; }
+    .source-table a:hover { text-decoration: underline; }
+    .citation { color: var(--s); font-weight: 700; text-decoration: none; font-size: 0.78rem; }
+    .citation:hover { text-decoration: underline; }
+    /* Footer */
+    footer { background: linear-gradient(135deg, #07162C 0%, #002B5B 100%); color: #fff; padding: 2.2rem; border-radius: 18px 18px 0 0; margin-top: 4rem; box-shadow: 0 -8px 24px rgba(0,0,0,0.08); }
+    .footer-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 2rem; align-items: stretch; }
+    .footer-logo { display:flex; align-items:center; gap:10px; font-size:1.25rem; font-weight:800; margin-bottom:0.8rem; }
+    .footer-logo i { color: var(--g); }
+    .footer-brand-block p { color: rgba(255,255,255,0.72); max-width: 540px; margin-bottom:0; }
+    .footer-contact-card { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); border-radius: 14px; padding: 1.3rem; }
+    .footer-contact-card h3 { font-size: 1rem; margin-bottom:0.35rem; color:#fff; }
+    .fc-name { font-size:1.25rem; font-weight:800; color:#fff; margin-bottom:0.9rem; }
+    .footer-action { display:flex; align-items:center; gap:10px; color:#fff !important; text-decoration:none; padding:0.72rem 0; border-top:1px solid rgba(255,255,255,0.10); word-break: break-word; }
+    .footer-action i { color: var(--g); width: 18px; }
+    .footer-action:hover span { text-decoration: underline; }
+    .foot-bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; font-size: 0.8rem; color: rgba(255,255,255,0.5); padding-top: 1rem; }
+    /* Responsive */
+    @media (max-width: 1100px) { .main-content { padding: 2rem; } .grid-2, .grid-3, .market-chart-grid, .pricing-grid { grid-template-columns: 1fr; } .chart-box { min-height: 390px; } .chart-insight { grid-template-columns: 1fr; } }
+    @media (max-width: 720px) { .main-content { margin-left: 0; width: 100%; padding: 1rem; } .sidebar { position: relative; width: 100%; height: auto; display: flex; flex-direction: column; padding: 12px; } .sidebar nav ul { display: flex; flex-direction: row; gap: 8px; overflow: auto; } .rfq-grid, .persona-grid, .strategy-grid { grid-template-columns: 1fr; } footer { padding:1.4rem; } }
+  </style>
+</head>
+<body>
+<!-- ===== SIDEBAR NAVIGATION ===== -->
+<div class="sidebar">
+<div class="brand"><i class="fa-solid fa-leaf"></i> <span>Báo cáo thị trường B2B</span></div>
+<nav>
+<ul>
+<li><a class="active" href="#sec1"><i class="fa-solid fa-flag"></i> Chapter 1: Executive Summary</a></li>
+<li><a href="#sec2"><i class="fa-solid fa-globe"></i> Chapter 2: Market Overview</a></li>
+<li><a href="#sec3"><i class="fa-solid fa-warehouse"></i> Chapter 3: Supplier Landscape</a></li>
+<li><a href="#sec4"><i class="fa-solid fa-award"></i> Chapter 4: Top Products</a></li>
+<li><a href="#sec5"><i class="fa-solid fa-clipboard-list"></i> Chapter 5: RFQ Listings</a></li>
+<li><a href="#sec6"><i class="fa-solid fa-magnifying-glass"></i> Chapter 6: Buyer Personas</a></li>
+<li><a href="#sec7"><i class="fa-solid fa-tags"></i> Chapter 7: Pricing</a></li>
+<li><a href="#sec8"><i class="fa-solid fa-rocket"></i> Chapter 8: Strategy</a></li>
+</ul>
+</nav>
+</div>
+<!-- ===== MAIN CONTENT ===== -->
+<div class="main-content">
+<!-- ===== HEADER BANNER ===== -->
+<div class="header-banner">
+<span class="badge">2026 Report</span>
+<h1 class="title">SMI Furniture — Wood Furniture Industry &amp; Product Groups Report</h1>
+<p style="color: rgba(255,255,255,0.95); font-size: 1.1rem; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Thị trường B2B toàn cầu &amp; cơ hội xuất khẩu cho 7 nhóm sản phẩm: Bàn · Ghế · Tủ · Giường · Kệ · Khung gương · Others — ưu tiên nhóm Ghế (Chairs)</p>
+<div class="meta">
+<span><i class="fa-solid fa-user-tie"></i> Người lập báo cáo: <strong>Thu Hiền (秋贤)</strong></span>
+<span><i class="fa-solid fa-calendar-days"></i> Ngày: <strong>19/08/2026</strong></span>
+</div>
+</div>
+<!-- ===== CHAPTER 1: EXECUTIVE SUMMARY ===== -->
+<div class="section-card" id="sec1">
+<h2 class="section-title"><i class="fa-solid fa-flag"></i> Chapter 1: Executive Summary</h2>
+<div class="grid-3">
+<div class="info-card"><div class="info-val">US$17,2 tỷ</div><div class="info-lbl">Xuất khẩu gỗ &amp; sản phẩm gỗ Việt Nam năm 2025 — tăng trưởng bền vững qua 160+ thị trường</div></div>
+<div class="info-card"><div class="info-val">US$831,6 tỷ</div><div class="info-lbl">Thị trường nội thất toàn cầu năm 2026 (từ US$786,1 tỷ năm 2025)</div></div>
+<div class="info-card"><div class="info-val">&gt;50%</div><div class="info-lbl">Tỷ trọng thị trường Mỹ trong tổng xuất khẩu gỗ Việt Nam 2025</div></div>
+</div>
+<div class="highlight"><strong>Điểm mấu chốt:</strong> SMI Furniture — doanh nghiệp nội thất gỗ hơn 20 năm tại Việt Nam — đang sở hữu 7 nhóm sản phẩm (Table, Chairs, Cabinet, Bed, Shelf, Khung gương, Others). Nhóm Ghế (dining chair, barstool, bench) là nhóm ưu tiên của báo cáo này: nhu cầu B2B toàn cầu đối với ghế ăn gỗ tự nhiên và ghế bọc vải đang tăng, trong khi năng lực OEM/ODM của Việt Nam là lợi thế định vị "designed in Vietnam, OEM-ready".</div>
+<p>Ngành gỗ Việt Nam duy trì vị thế xuất khẩu top 5 thế giới: năm 2025, kim ngạch xuất khẩu gỗ và sản phẩm gỗ đạt khoảng US$17,2 tỷ, xuất đi hơn 160 quốc gia và vùng lãnh thổ, trong đó Mỹ chiếm hơn một nửa tổng kim ngạch <a href="https://m.wood365.cn/News/NewsInfo_283812.html" target="_blank" class="citation">[Nguồn]</a>. Về phía cầu, thị trường nội thất toàn cầu ước đạt US$786,1 tỷ năm 2025 và dự kiến tăng lên US$831,6 tỷ năm 2026 <a href="https://www.grandviewresearch.com/industry-analysis/furniture-market" target="_blank" class="citation">[Nguồn]</a>; riêng phân khúc nội thất gỗ năm 2026 ước đạt US$434,7 tỷ với tốc độ tăng trưởng ~4,9%/năm giai đoạn 2026–2035 <a href="https://www.gminsights.com/industry-analysis/wooden-furniture-market" target="_blank" class="citation">[Nguồn]</a>. Gỗ chiếm 68,49% thị phần thị trường nội thất Việt Nam năm 2025 <a href="https://www.mordorintelligence.com/industry-reports/vietnam-furniture-market" target="_blank" class="citation">[Nguồn]</a>.</p>
+<p>Trên Alibaba.com, các nhà cung cấp nội thất Việt Nam hiện diện ở hầu hết phân khúc: ghế mây/ghế bọc (US$15–75), giường gỗ OEM (US$122–240), tủ bếp RTA (US$30–100), nội thất khách sạn (US$380–720) và ghế/lounge gỗ (US$25–60). Khoảng giá này mở ra cho SMI một hành lang định vị FOB rõ ràng theo từng nhóm sản phẩm, kết hợp câu chuyện thủ công 20 năm và năng lực dự án (xem Chương 7). Rủi ro chính cần quản lý: yêu cầu chứng chỉ (FSC, BSCI, ISO), kiểm soát formaldehyde (CARB P2/TSCA Title VI khi bán vào Mỹ) và phản hồi khách nhanh để giữ lợi thế cạnh tranh với supplier Trung Quốc.</p>
+</div>
+<!-- ===== CHAPTER 2: GLOBAL MARKET OVERVIEW ===== -->
+<div class="section-card" id="sec2">
+<h2 class="section-title"><i class="fa-solid fa-globe"></i> Chapter 2: Global Market Overview</h2>
+<!-- Insight Pills -->
+<div class="chart-insight">
+<div class="insight-pill"><strong>US$831,6 tỷ</strong><span>Thị trường nội thất toàn cầu 2026, tăng từ US$786,1 tỷ (2025)</span></div>
+<div class="insight-pill"><strong>4,9% CAGR</strong><span>Tăng trưởng phân khúc nội thất gỗ 2026–2035 (US$434,7 tỷ năm 2026)</span></div>
+<div class="insight-pill"><strong>US$17,2 tỷ</strong><span>Xuất khẩu gỗ Việt Nam 2025; Mỹ &gt;50%, 160+ thị trường</span></div>
+</div>
+<!-- Charts: Market Share + Growth -->
+<div class="market-chart-grid">
+<div class="chart-box"><canvas id="shareChart" width="700" height="350"></canvas></div>
+<div class="chart-box"><canvas id="growthChart" width="700" height="350"></canvas></div>
+</div>
+<!-- Top Exporting Countries -->
+<h3 class="sub-title"><i class="fa-solid fa-truck-fast"></i> Các quốc gia xuất khẩu nội thất gỗ hàng đầu (Nhà sản xuất)</h3>
+<div class="table-container">
+<table>
+<thead><tr><th>#</th><th>Quốc gia</th><th>Ước tính kim ngạch / thị phần</th><th>Nhận định chính</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Trung Quốc</td><td>~35–40% thị phần toàn cầu</td><td>Quy mô lớn nhất, giá cạnh tranh, hệ sinh thái phụ kiện đầy đủ</td></tr>
+<tr><td>2</td><td>Việt Nam</td><td>~US$17,2 tỷ (2025); top 5 thế giới</td><td>Tăng trưởng nhanh nhờ FDI, tay nghề, ưu đãi thuế EVFTA/CPTPP</td></tr>
+<tr><td>3</td><td>Ý</td><td>~6–8% thị phần</td><td>Dẫn đầu phân khúc luxury/design, thương hiệu mạnh</td></tr>
+<tr><td>4</td><td>Ba Lan</td><td>~5–7% thị phần</td><td>Trung tâm sản xuất gỗ châu Âu, xuất mạnh sang EU</td></tr>
+<tr><td>5</td><td>Đức</td><td>~4–6% thị phần</td><td>Nội thất bếp/tủ chất lượng cao, xuất khẩu khu vực</td></tr>
+<tr><td>6</td><td>Indonesia</td><td>~4–5% thị phần</td><td>Mây, gỗ teak, thủ công mỹ nghệ</td></tr>
+<tr><td>7</td><td>Malaysia</td><td>~3–4% thị phần</td><td>Gỗ cao su (rubberwood) mạnh cho ghế/bàn ăn</td></tr>
+<tr><td>8</td><td>Mexico</td><td>~2–3% thị phần</td><td>Gần thị trường Mỹ, nội thất gỗ thông (pine)</td></tr>
+</tbody>
+</table>
+</div>
+<!-- Exporting Countries Chart -->
+<div class="chart-box wide"><canvas id="exportCountriesChart" width="700" height="350"></canvas></div>
+<!-- Top Importing Countries -->
+<h3 class="sub-title"><i class="fa-solid fa-cart-shopping"></i> Các thị trường nhập khẩu hàng đầu (Người mua)</h3>
+<div class="table-container">
+<table>
+<thead><tr><th>#</th><th>Thị trường</th><th>Ước tính tỷ trọng nhập khẩu</th><th>Xu hướng nhu cầu</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Mỹ</td><td>~35–40% nhu cầu toàn cầu</td><td>Là thị trường lớn nhất; &gt;50% kim ngạch gỗ VN; yêu cầu CARB P2/TSCA Title VI</td></tr>
+<tr><td>2</td><td>Đức</td><td>~8–10%</td><td>Ưu tiên FSC, bền vững, thiết kế tối giản</td></tr>
+<tr><td>3</td><td>Anh</td><td>~7–9%</td><td>E-commerce mạnh, ưa phong cách Japandi/natural</td></tr>
+<tr><td>4</td><td>Pháp</td><td>~6–8%</td><td>Thiết kế tinh tế, yêu cầu ghi nhãn nguồn gốc gỗ</td></tr>
+<tr><td>5</td><td>Nhật Bản</td><td>~5–6%</td><td>Khổ nhỏ (compact), chất lượng hoàn thiện khắt khe</td></tr>
+<tr><td>6</td><td>Canada</td><td>~4–5%</td><td>Gần gũi chuỗi cung ứng Mỹ, KD/mail-order phổ biến</td></tr>
+<tr><td>7</td><td>Úc</td><td>~3–4%</td><td>Outdoor furniture mạnh, khí hậu nhiệt đới đẩy nhu cầu</td></tr>
+<tr><td>8</td><td>Hà Lan</td><td>~3–4%</td><td>Cảng trung chuyển EU, nhập khẩu tái xuất lớn</td></tr>
+</tbody>
+</table>
+</div>
+<!-- Importing Countries Chart -->
+<div class="chart-box wide"><canvas id="importCountriesChart" width="700" height="350"></canvas></div>
+<p style="font-size:0.8rem;color:#7B8794;">Ghi chú: tỷ trọng xuất/nhập khẩu là ước tính định hướng dựa trên dữ liệu ITTO 2020–2025 <a href="https://www.itto.int/files/user/mis/MIS%20_16-31_January2026.pdf" target="_blank" class="citation">[Nguồn]</a>, GM Insights <a href="https://www.gminsights.com/industry-analysis/wooden-furniture-market" target="_blank" class="citation">[Nguồn]</a> và báo cáo xuất khẩu gỗ VN 2025 <a href="https://m.wood365.cn/News/NewsInfo_283812.html" target="_blank" class="citation">[Nguồn]</a>. Số liệu cụ thể theo giao dịch cần xác nhận thêm tại ITC Trade Map.</p>
+</div>
+<!-- ===== CHAPTER 3: SUPPLIER LANDSCAPE ===== -->
+<div class="section-card" id="sec3">
+<h2 class="section-title"><i class="fa-solid fa-warehouse"></i> Chapter 3: Supplier Landscape</h2>
+<p>Việt Nam không phải thị trường ngách trên Alibaba: tìm kiếm "vietnam furniture manufacturer" trả về hàng trăm supplier đã xác minh (10–20 năm hoạt động). Dưới đây là các nhà cung cấp nội thất gỗ Việt Nam tiêu biểu theo từng nhóm sản phẩm, bổ sung nhà cung cấp toàn cầu để đối chiếu (xem <a href="https://www.alibaba.com/trade/search?SearchText=vietnam+furniture+manufacturer" target="_blank" class="citation">kết quả tìm kiếm Alibaba</a>).</p>
+<div class="niche-notice" style="background: #E8F4FD; border-left: 4px solid #1F75FE; padding: 1rem; border-radius: 4px; margin-bottom: 1.5rem;">
+  <strong>Phần A — Nhà cung cấp Việt Nam (16 nhà cung cấp):</strong> hiện diện đầy đủ từ ghế mây, giường gỗ OEM, tủ bếp RTA đến nội thất khách sạn. Đây là đối thủ trực tiếp và cũng là chuẩn benchmark cho SMI.
+</div>
+<h3 class="sub-title">Phần A: Nhà cung cấp từ Việt Nam</h3>
+<div class="table-container">
+<table>
+<thead>
+<tr><th style="width: 40px;">STT</th><th>Công ty</th><th>Sản phẩm chính</th><th>Doanh thu ước tính</th><th>Số năm trên Alibaba</th><th style="width: 90px;">Store</th></tr>
+</thead>
+<tbody>
+<tr><td>1</td><td>VQN CO.,LTD (<span style="color:#D4A017;font-weight:700;">Verified</span> Supplier)</td><td>Wicker/rattan outdoor, ghế, sofa sets</td><td>Không công bố</td><td>13 năm</td><td><a class="link-store-btn" href="https://npth2610.trustpass.alibaba.com/company_profile.html" target="_blank">Xem Store</a></td></tr>
+<tr><td>2</td><td>IMITI COMPANY LIMITED (<span style="color:#D4A017;font-weight:700;">Verified</span> Supplier)</td><td>Hotel furniture, giường gỗ solid/ash, sofa</td><td>Không công bố</td><td>10 năm</td><td><a class="link-store-btn" href="https://imitivn.trustpass.alibaba.com/company_profile.html" target="_blank">Xem Store</a></td></tr>
+<tr><td>3</td><td>DONG NAI BRANCH - NGHIA SON WOODEN FURNITURE CO., LTD (<span style="color:#D4A017;font-weight:700;">Verified</span> Supplier)</td><td>Acacia sofa, garden furniture, nội thất ngoài trời</td><td>Không công bố</td><td>20 năm</td><td><a class="link-store-btn" href="https://nghiason2006.trustpass.alibaba.com/company_profile.html" target="_blank">Xem Store</a></td></tr>
+<tr><td>4</td><td>HOMEWARE CRAFTS TRADING AND MANUFACTURING COMPANY LIMITED (<span style="color:#D4A017;font-weight:700;">Verified</span> Supplier)</td><td>Ghế mây thủ công, xuất EU</td><td>Không công bố</td><td>8 năm</td><td><a class="link-store-btn" href="https://1001craftvillages.trustpass.alibaba.com/company_profile.html" target="_blank">Xem Store</a></td></tr>
+<tr><td>5</td><td>HSVN INDUSTRIAL CO.,LTD (<span style="color:#D4A017;font-weight:700;">Verified</span> Supplier)</td><td>Tủ bếp RTA, kitchen cabinet</td><td>Không công bố</td><td>7 năm</td><td><a class="link-store-btn" href="https://hycabinetry.trustpass.alibaba.com/company_profile.html" target="_blank">Xem Store</a></td></tr>
+<tr><td>6</td><td>HONG SHENG (VIET NAM) INDUSTRIAL COMPANY LIMITED (<span style="color:#D4A017;font-weight:700;">Verified</span> Supplier)</td><td>Kitchen cabinets RTA, có kho Mỹ</td><td>Không công bố</td><td>6 năm</td><td><a class="link-store-btn" href="https://hscabinetry.trustpass.alibaba.com/company_profile.html" target="_blank">Xem Store</a></td></tr>
+<tr><td>7</td><td>THY GLOBAL DEVELOPMENT &amp; INVESTMENT COMPANY LIMITED (<span style="color:#D4A017;font-weight:700;">Verified</span> Supplier)</td><td>Tủ quần áo mây, rattan wardrobe</td><td>Không công bố</td><td>6 năm</td><td><a class="link-store-btn" href="https://thyglobal.trustpass.alibaba.com/company_profile.html" target="_blank">Xem Store</a></td></tr>
+<tr><td>8</td><td>TRIHO COMPANY LIMITED (<span style="color:#D4A017;font-weight:700;">Verified</span> Supplier)</td><td>Sofa bọc nỉ giá phổ thông</td><td>Không công bố</td><td>6 năm</td><td><a class="link-store-btn" href="https://triho.trustpass.alibaba.com/company_profile.html" target="_blank">Xem Store</a></td></tr>
+<tr><td>9</td><td>NEWSUN PRODUCTION TRADING IMPORT EXPORT CO., LTD (<span style="color:#D4A017;font-weight:700;">Verified</span> Supplier)</td><td>Sofa set xuất UK (HELSINKI-UK)</td><td>Không công bố</td><td>5 năm</td><td><a class="link-store-btn" href="https://vn29018461914brtu.trustpass.alibaba.com/company_profile.html" target="_blank">Xem Store</a></td></tr>
+<tr><td>10</td><td>JY FURNITURE COMPANY LIMITED (<span style="color:#D4A017;font-weight:700;">Verified</span> Supplier)</td><td>Kitchen cabinet RTA cho dự án hotel</td><td>Không công bố</td><td>5 năm</td><td><a class="link-store-btn" href="https://vn19008640962qmtw.trustpass.alibaba.com/company_profile.html" target="_blank">Xem Store</a></td></tr>
+<tr><td>11</td><td>NEFS FURNITURE VIET NAM CO.,LTD (<span style="color:#D4A017;font-weight:700;">Verified</span> Supplier)</td><td>OEM/ODM solid wood: giường, sofa, ghế, bàn, tủ (đánh giá 4,9/5)</td><td>Không công bố</td><td>4 năm</td><td><a class="link-store-btn" href="https://efsvietnam.trustpass.alibaba.com/company_profile.html" target="_blank">Xem Store</a></td></tr>
+<tr><td>12</td><td>NGOC HOANG ANH TRADING COMPANY LIMITED (<span style="color:#D4A017;font-weight:700;">Verified</span> Supplier)</td><td>Bedroom casegoods khách sạn (Holiday Inn), giường gỗ</td><td>Không công bố</td><td>4 năm</td><td><a class="link-store-btn" href="https://ngochoanganh.trustpass.alibaba.com/company_profile.html" target="_blank">Xem Store</a></td></tr>
+<tr><td>13</td><td>NHAT MINH DEVELOPMENT MANUFACTURER AND EXPORT CO.,LTD (<span style="color:#D4A017;font-weight:700;">Verified</span> Supplier)</td><td>Ghế mây tự nhiên, sofa set (đánh giá 5,0/5)</td><td>Không công bố</td><td>3 năm</td><td><a class="link-store-btn" href="https://nhatminhmanufacturer.trustpass.alibaba.com/company_profile.html" target="_blank">Xem Store</a></td></tr>
+<tr><td>14</td><td>VIET NAM SOURCE JOINT STOCK COMPANY (<span style="color:#D4A017;font-weight:700;">Verified</span> Supplier)</td><td>FF&amp;E khách sạn trọn gói (La Quinta, Home2 Suites)</td><td>Không công bố</td><td>3 năm</td><td><a class="link-store-btn" href="https://vietnamsource.trustpass.alibaba.com/company_profile.html" target="_blank">Xem Store</a></td></tr>
+<tr><td>15</td><td>FURAKA JOINT STOCK COMPANY (<span style="color:#D4A017;font-weight:700;">Verified</span> Supplier)</td><td>Adirondack chair, ghế gỗ ngoài trời OEM</td><td>Không công bố</td><td>3 năm</td><td><a class="link-store-btn" href="https://furaka.trustpass.alibaba.com/company_profile.html" target="_blank">Xem Store</a></td></tr>
+<tr><td>16</td><td>MODERN SOURCING VIET NAM CO.,LTD (<span style="color:#D4A017;font-weight:700;">Verified</span> Supplier)</td><td>Nội thất bê tông/GRC, sofa</td><td>Không công bố</td><td>10 năm</td><td><a class="link-store-btn" href="https://modernsourcing.trustpass.alibaba.com/company_profile.html" target="_blank">Xem Store</a></td></tr>
+</tbody>
+</table>
+</div>
+<h3 class="sub-title">Phần B: Nhà cung cấp toàn cầu (benchmark đối chiếu)</h3>
+<div class="table-container">
+<table>
+<thead>
+<tr><th style="width: 40px;">STT</th><th>Công ty</th><th>Quốc gia</th><th>Sản phẩm chính</th><th>Doanh thu ước tính</th><th style="width: 90px;">Store</th></tr>
+</thead>
+<tbody>
+<tr><td>17</td><td>Dongguan Ruifuxiang Furniture Co., Ltd.</td><td>Trung Quốc</td><td>Sideboard, tủ gỗ cao su solid, custom</td><td>Không công bố</td><td><a class="link-store-btn" href="https://rfxfurniture.en.alibaba.com/" target="_blank">Xem Store</a></td></tr>
+<tr><td>18</td><td>Ganzhou Nevan Furniture Co., Ltd. (<span style="color:#D4A017;font-weight:700;">Verified</span> Supplier)</td><td>Trung Quốc</td><td>Dining/living furniture, sideboard</td><td>US$80.000+</td><td><a class="link-store-btn" href="https://nevanfurniture.en.alibaba.com/" target="_blank">Xem Store</a></td></tr>
+<tr><td>19</td><td>GEMINI KRAFTS (<span style="color:#D4A017;font-weight:700;">Verified</span> Supplier)</td><td>Ấn Độ</td><td>Reclaimed mango wood, phong cách industrial</td><td>US$1–2,5 triệu/năm</td><td><a class="link-store-btn" href="https://geminikrafts.m.trustpass.alibaba.com/index.html" target="_blank">Xem Store</a></td></tr>
+<tr><td>20</td><td>Shandong Hongsheng Intelligent Technology Co., Ltd.</td><td>Trung Quốc</td><td>Panel furniture, tủ gương (mirrored buffet)</td><td>Không công bố</td><td><a class="link-store-btn" href="https://hongshengsd.en.alibaba.com/zh_CN/company_profile.html" target="_blank">Xem Store</a></td></tr>
+</tbody>
+</table>
+</div>
+<p style="font-size:0.8rem;color:#7B8794;">Doanh thu "ước tính" là con số hiển thị trên hồ sơ Alibaba (nếu có); các nhà cung cấp Việt Nam hầu hết không công bố doanh thu trên storefront — nguồn: hồ sơ store Alibaba, truy cập 19/08/2026. Nhãn (<span style="color:#D4A017;font-weight:700;">Verified</span> Supplier) gắn cho nhà cung cấp có hồ sơ trên miền TrustPass của Alibaba (trustpass.alibaba.com) hoặc đã được ghi nhận trạng thái Verified trong nghiên cứu; Dongguan Ruifuxiang và Shandong Hongsheng chưa có dấu hiệu Verified trong dữ liệu thu thập. Trạng thái hiện tại nên xác nhận lại trên storefront trước khi sử dụng trong giao dịch.</p>
+</div>
+<!-- ===== CHAPTER 4: TOP-SELLING PRODUCTS ===== -->
+<div class="section-card" id="sec4">
+<h2 class="section-title"><i class="fa-solid fa-award"></i> Chapter 4: Top-Selling Products by SMI Category</h2>
+<p>24 sản phẩm thực tế trên Alibaba (nguồn: tìm kiếm "vietnam furniture manufacturer" <a href="https://www.alibaba.com/trade/search?SearchText=vietnam+furniture+manufacturer" target="_blank" class="citation">[Nguồn]</a> và danh mục sideboard <a href="https://www.alibaba.com/catalog/sideboards_cid37033001" target="_blank" class="citation">[Nguồn]</a>), xếp theo 7 nhóm sản phẩm SMI. Nhóm Ghế được ưu tiên phân tích. Giá là giá niêm yết FOB/ex-works, cần xác nhận lại khi chào hàng.</p>
+<div class="table-container">
+<table>
+<thead>
+<tr><th style="width: 40px;">#</th><th style="width: 65px;">Ảnh Sản Phẩm</th><th>Tên Sản Phẩm Bán Chạy</th><th>Dải Giá FOB (USD)</th><th>MOQ</th><th>Nhà Cung Cấp Uy Tín</th><th style="width: 110px;">Link Sản Phẩm</th></tr>
+</thead>
+<tbody>
+<tr><td>1</td><td><img src="https://s.alicdn.com/@sc04/kf/Haa425329622949ed8ced75564e89502ce.png_300x300.png" style="border-radius:4px; object-fit:cover; width:60px; height:60px;" alt="p1"></td><td><strong>Rattan Chair Manufacturer Vietnam Offering Wholesale to EU Market</strong></td><td>US$15–20</td><td>50 pieces</td><td>HOMEWARE CRAFTS (VN)</td><td><a class="link-store-btn" href="https://www.alibaba.com/product-detail/Rattan-Chair-Manufacturer-Vietnam-Offering-Wholesale_10000028824516.html" target="_blank">Xem Chi Tiết</a></td></tr>
+<tr><td>2</td><td><img src="https://s.alicdn.com/@sc04/kf/H71df3e09d4b64f4d93d78fdce9445046A.png_300x300.png" style="border-radius:4px; object-fit:cover; width:60px; height:60px;" alt="p2"></td><td><strong>Best Price, Best Quality Natural Rattan Chair Manufacturer, Living Room Sofa Set</strong></td><td>US$68–75</td><td>3 pieces</td><td>NHAT MINH (VN)</td><td><a class="link-store-btn" href="https://www.alibaba.com/product-detail/Best-Price-Best-Quality-Natural-Rattan_10000017748460.html" target="_blank">Xem Chi Tiết</a></td></tr>
+<tr><td>3</td><td><img src="https://s.alicdn.com/@sc04/kf/H98f74ddf3c26432a942cda72e3e836a9u.png_300x300.png" style="border-radius:4px; object-fit:cover; width:60px; height:60px;" alt="p3"></td><td><strong>SAle Bulk Commercial Grade Armchair Manufacturing Vietnam Factory</strong></td><td>US$60</td><td>50 pieces</td><td>TLI HA NOI (VN)</td><td><a class="link-store-btn" href="https://www.alibaba.com/product-detail/SAle-Bulk-Commercial-Grade-Armchair-Manufacturing_1601727680020.html" target="_blank">Xem Chi Tiết</a></td></tr>
+<tr><td>4</td><td><img src="https://s.alicdn.com/@sc04/kf/H8387e1ee283d457d82fb79532fbb19ffp.png_300x300.png" style="border-radius:4px; object-fit:cover; width:60px; height:60px;" alt="p4"></td><td><strong>Bespoke Armchair Manufacturer Vietnam OEM ODM for Luxury Hotel Projects</strong></td><td>US$60</td><td>50 pieces</td><td>TLI HA NOI (VN)</td><td><a class="link-store-btn" href="https://www.alibaba.com/product-detail/Bespoke-Armchair-Manufacturer-Vietnam-OEM-ODM_1601727317700.html" target="_blank">Xem Chi Tiết</a></td></tr>
+<tr><td>5</td><td><img src="https://s.alicdn.com/@sc04/kf/H4e21ace1ab1248108cccf1972bc8f04ca.png_300x300.png" style="border-radius:4px; object-fit:cover; width:60px; height:60px;" alt="p5"></td><td><strong>OEM Vietnam Furniture Manufacturer Customizable Solid Wood Adirondack Chair</strong></td><td>US$24,50–29,50</td><td>2 pieces</td><td>FURAKA (VN)</td><td><a class="link-store-btn" href="https://www.alibaba.com/product-detail/OEM-Vietnam-Furniture-Manufacturer-Customizable-Simple_11000017360731.html" target="_blank">Xem Chi Tiết</a></td></tr>
+<tr><td>6</td><td><img src="https://s.alicdn.com/@sc04/kf/H793f0632c2c54435978d179a10891cb7A.png_300x300.png" style="border-radius:4px; object-fit:cover; width:60px; height:60px;" alt="p6"></td><td><strong>Lumetal Foldable Dining Table Wood Metal — Vietnam Origin</strong></td><td>US$30,80</td><td>1×40' container</td><td>KINGTEC GROUP (VN)</td><td><a class="link-store-btn" href="https://www.alibaba.com/product-detail/Lumetal-Foldable-Dining-Table-Wood-Metal_1601677534008.html" target="_blank">Xem Chi Tiết</a></td></tr>
+<tr><td>7</td><td><img src="https://s.alicdn.com/@sc04/kf/H7a25dcf518b24321a18342ce70bac81cY.png_300x300.png" style="border-radius:4px; object-fit:cover; width:60px; height:60px;" alt="p7"></td><td><strong>Top Grade 48x96inch Acacia Table Top, Made in Vietnam</strong></td><td>US$65,60–78,72</td><td>400 pieces</td><td>THIEN PHAT (VN)</td><td><a class="link-store-btn" href="https://www.alibaba.com/product-detail/Top-Grade-48x96inch-Acacia-Table-Top_10000038392078.html" target="_blank">Xem Chi Tiết</a></td></tr>
+<tr><td>8</td><td><img src="https://s.alicdn.com/@sc04/kf/H45e4e9c6ae3e4d40b7b9e821880c3028z.png_300x300.png" style="border-radius:4px; object-fit:cover; width:60px; height:60px;" alt="p8"></td><td><strong>Modern Home Decor Dressing Desk Wooden and Iron, Made in Vietnam</strong></td><td>US$81,60</td><td>2 pieces</td><td>LBN (VN)</td><td><a class="link-store-btn" href="https://www.alibaba.com/product-detail/Modern-Home-Decor-Furniture-Indoor-Outdoor_10000024304864.html" target="_blank">Xem Chi Tiết</a></td></tr>
+<tr><td>9</td><td><img src="https://s.alicdn.com/@sc04/kf/H1ccc9da5ac5a43ada2abbc3297378a00Y.jpg_300x300.jpg" style="border-radius:4px; object-fit:cover; width:60px; height:60px;" alt="p9"></td><td><strong>OEM Solid Wood Bed Frame, Japanese Joinery, Made in Vietnam</strong></td><td>US$240</td><td>30 pieces</td><td>IMITI (VN)</td><td><a class="link-store-btn" href="https://www.alibaba.com/product-detail/OEM-Solid-Wood-Bed-Frame-Manufacturer_10000040796243.html" target="_blank">Xem Chi Tiết</a></td></tr>
+<tr><td>10</td><td><img src="https://s.alicdn.com/@sc04/kf/Hf5e83d0f197e4cf4b29d9202509498b5P.png_300x300.png" style="border-radius:4px; object-fit:cover; width:60px; height:60px;" alt="p10"></td><td><strong>OEM/ODM Solid Ash Wood Platform Bed Frame for Minimal Bedroom</strong></td><td>US$122</td><td>20 pieces</td><td>IMITI (VN)</td><td><a class="link-store-btn" href="https://www.alibaba.com/product-detail/OEM-ODM-Solid-Ash-Wood-Platform_10000043161696.html" target="_blank">Xem Chi Tiết</a></td></tr>
+<tr><td>11</td><td><img src="https://s.alicdn.com/@sc04/kf/Hc0606215c410407fb71c46089b128dc0K.png_300x300.png" style="border-radius:4px; object-fit:cover; width:60px; height:60px;" alt="p11"></td><td><strong>Wooden Bed Manufacturer for Hotel Project — Vietnamese Factory</strong></td><td>US$199</td><td>4 pieces</td><td>NGOC HOANG ANH (VN)</td><td><a class="link-store-btn" href="https://www.alibaba.com/product-detail/Wooden-Bed-Manufacturer-for-Hotel-Project_1601025754848.html" target="_blank">Xem Chi Tiết</a></td></tr>
+<tr><td>12</td><td><img src="https://s.alicdn.com/@sc04/kf/Haa933512a14542fdb9d33c18f10220ebS.png_300x300.png" style="border-radius:4px; object-fit:cover; width:60px; height:60px;" alt="p12"></td><td><strong>Modern Holiday Inn Hotel Bedroom Furniture, Plywood Casegoods</strong></td><td>US$380,13–575,35</td><td>10 pieces</td><td>NGOC HOANG ANH (VN)</td><td><a class="link-store-btn" href="https://www.alibaba.com/product-detail/Modern-Holiday-Inn-Hotel-Bedroom-Furniture_10000035450512.html" target="_blank">Xem Chi Tiết</a></td></tr>
+<tr><td>13</td><td><img src="https://s.alicdn.com/@sc04/kf/H1861ef458f1c4cae9b3b192625a476686.png_300x300.png" style="border-radius:4px; object-fit:cover; width:60px; height:60px;" alt="p13"></td><td><strong>American Kitchen Cabinets Ready To Assemble, Vietnam Shaker White</strong></td><td>US$47–100</td><td>1 piece</td><td>HONG SHENG (VN)</td><td><a class="link-store-btn" href="https://www.alibaba.com/product-detail/American-Kitchen-Cabinets-Ready-To-Assemble_1601612571280.html" target="_blank">Xem Chi Tiết</a></td></tr>
+<tr><td>14</td><td><img src="https://s.alicdn.com/@sc04/kf/S6384238b16fd4347b779c68fee9938few.jpg_300x300.jpg" style="border-radius:4px; object-fit:cover; width:60px; height:60px;" alt="p14"></td><td><strong>Vietnam RTA Kitchen Cabinet Wholesale, Modern Solid Wood Pantry</strong></td><td>US$30–99</td><td>500 pieces</td><td>HSVN (VN)</td><td><a class="link-store-btn" href="https://www.alibaba.com/product-detail/Vietnam-RTA-Kitchen-Cabinet-Manufacturer-Wholesale_1601595673149.html" target="_blank">Xem Chi Tiết</a></td></tr>
+<tr><td>15</td><td><img src="https://s.alicdn.com/@sc04/kf/H543c4b14791441f9af276617c30c58fcP.jpg_300x300.jpg" style="border-radius:4px; object-fit:cover; width:60px; height:60px;" alt="p15"></td><td><strong>Vietnam Manufacturer 2-door Domed Rattan Wardrobe Minimalist</strong></td><td>US$30–50</td><td>10 pieces</td><td>THY GLOBAL (VN)</td><td><a class="link-store-btn" href="https://www.alibaba.com/product-detail/Vietnam-Manufacturer-2-door-Domed-Rattan_10000016481022.html" target="_blank">Xem Chi Tiết</a></td></tr>
+<tr><td>16</td><td><img src="https://s.alicdn.com/@sc04/kf/H501a48e5b2c043e48e1872b501935991I.jpg_300x300.jpg" style="border-radius:4px; object-fit:cover; width:60px; height:60px;" alt="p16"></td><td><strong>Solid Rubber Wood Sideboard Cabinet AD-205</strong></td><td>US$213–384</td><td>2 pieces</td><td>Ruifuxiang (CN)</td><td><a class="link-store-btn" href="https://www.alibaba.com/product-detail/Solid-Rubber-Wood-Sideboard-Cabinet-for_60054711800.html" target="_blank">Xem Chi Tiết</a></td></tr>
+<tr><td>17</td><td><img src="https://s.alicdn.com/@sc04/kf/S1e166c95ace04b979d7aea12ed21a99eR.png_300x300.png" style="border-radius:4px; object-fit:cover; width:60px; height:60px;" alt="p17"></td><td><strong>Modern Fluted Sideboard MDF + Solid Wood</strong></td><td>US$239</td><td>1 unit</td><td>OEM Indonesia</td><td><a class="link-store-btn" href="https://www.alibaba.com/product-detail/Modern-Fluted-Sideboard-Solid-Wood-Living_11000025548399.html" target="_blank">Xem Chi Tiết</a></td></tr>
+<tr><td>18</td><td><img src="https://s.alicdn.com/@sc04/kf/A51883fa8d70f4eee882cda6596e46b08w.jpg_300x300.jpg" style="border-radius:4px; object-fit:cover; width:60px; height:60px;" alt="p18"></td><td><strong>Hot Sale Walnut Veneer Sideboard Cabinet</strong></td><td>US$165–177</td><td>30 pieces</td><td>H&amp;T (CN)</td><td><a class="link-store-btn" href="https://www.alibaba.com/product-introduction/Hot-sale-new-design-high-quality_62525894605.html" target="_blank">Xem Chi Tiết</a></td></tr>
+<tr><td>19</td><td><img src="https://s.alicdn.com/@sc04/kf/H8d99570f601f4c85b04eeb2a7d2286c0y.jpg_300x300.jpg" style="border-radius:4px; object-fit:cover; width:60px; height:60px;" alt="p19"></td><td><strong>Solid Wood Maison Acacia Corner Sofa Set for Patios Villas Hotels</strong></td><td>US$525</td><td>37 sets</td><td>NGHIA SON (VN)</td><td><a class="link-store-btn" href="https://www.alibaba.com/product-detail/Solid-Wood-Maison-Acacia-Corner-Sofa_10000043642702.html" target="_blank">Xem Chi Tiết</a></td></tr>
+<tr><td>20</td><td><img src="https://s.alicdn.com/@sc04/kf/S59004519a9504c0a8fd2eaa1a4ada623S.jpg_300x300.jpg" style="border-radius:4px; object-fit:cover; width:60px; height:60px;" alt="p20"></td><td><strong>Vietnam Factory Modern Upholstered Affordable Sofa for Wholesale</strong></td><td>US$25</td><td>50 boxes</td><td>TRIHO (VN)</td><td><a class="link-store-btn" href="https://www.alibaba.com/product-detail/Vietnam-Factory-Modern-Upholstered-Affordable-Sofa_10000009894220.html" target="_blank">Xem Chi Tiết</a></td></tr>
+<tr><td>21</td><td><img src="https://s.alicdn.com/@sc04/kf/S20c4ebeed1d54d4582c90442f5353e4aj.png_300x300.png" style="border-radius:4px; object-fit:cover; width:60px; height:60px;" alt="p21"></td><td><strong>Vietnam Hospitality Furniture FF&amp;E Packages for La Quinta Hotel Projects</strong></td><td>US$589–707</td><td>15 sets</td><td>VIET NAM SOURCE (VN)</td><td><a class="link-store-btn" href="https://www.alibaba.com/product-detail/Vietnam-Hospitality-Furniture-Manufacturer-Producing-Complete_10000046033416.html" target="_blank">Xem Chi Tiết</a></td></tr>
+<tr><td>22</td><td><img src="https://s.alicdn.com/@sc04/kf/Abe66370b22ea48e388f6539c8eb8810dm.jpg_300x300.jpg" style="border-radius:4px; object-fit:cover; width:60px; height:60px;" alt="p22"></td><td><strong>Vietnam's Premier Wicker Furniture Manufacturer — Outdoor Furniture</strong></td><td>US$100–200</td><td>100 sets</td><td>VQN (VN)</td><td><a class="link-store-btn" href="https://www.alibaba.com/product-detail/Vietnam-s-Premier-Wicker-Furniture-Manufacturer_10000020124005.html" target="_blank">Xem Chi Tiết</a></td></tr>
+<tr><td>23</td><td><img src="https://s.alicdn.com/@sc04/kf/Udac6d9fa306b483e8788699b82abe347N.jpg_300x300.jpg" style="border-radius:4px; object-fit:cover; width:60px; height:60px;" alt="p23"></td><td><strong>Top Furniture HELSINKI-UK Sofa Set of 4 Pieces, Vietnam Manufacturer</strong></td><td>US$77,80–79,50</td><td>350 sets</td><td>NEWSUN (VN)</td><td><a class="link-store-btn" href="https://www.alibaba.com/product-detail/Top-Furniture-HELSINKI-UK-Sofa-Set_11000004630239.html" target="_blank">Xem Chi Tiết</a></td></tr>
+<tr><td>24</td><td><img src="https://s.alicdn.com/@sc04/kf/H13fe80b3257142acb33af9ad25277358z.jpg_300x300.jpg" style="border-radius:4px; object-fit:cover; width:60px; height:60px;" alt="p24"></td><td><strong>Luxury Gold Trim Mirrored Buffet Cabinet</strong></td><td>US$69,90</td><td>100 sets</td><td>Shandong Hongsen (CN)</td><td><a class="link-store-btn" href="https://www.alibaba.com/product-detail/Luxury-Gold-Trim-Mirrored-Buffet-Cabinet_1601386712592.html" target="_blank">Xem Chi Tiết</a></td></tr>
+</tbody>
+</table>
+</div>
+<p style="font-size:0.8rem;color:#7B8794;">Nhóm Kệ (Shelf) và Khung gương của SMI chưa có dữ liệu listing trực tiếp trong phạm vi tìm kiếm này — cần bổ sung qua tìm kiếm "shelf" / "mirror frame" trên Alibaba khi mở rộng. Giá GBP/EUR của một số listing cũ được quy đổi sang USD theo tỷ giá niêm yết tại thời điểm chụp (19/08/2026) và chỉ mang tính benchmark.</p>
+</div>
+<!-- ===== CHAPTER 5: BUYER RFQ REQUESTS ===== -->
+<div class="section-card" id="sec5">
+<h2 class="section-title"><i class="fa-solid fa-clipboard-list"></i> Chapter 5: Buyer RFQ Requests</h2>
+<p>Mẫu RFQ tổng hợp từ các yêu cầu thực tế trên Alibaba cho nhóm nội thất gỗ/ghế (xem <a href="https://www.alibaba.com/showroom/wooden-dining-chair.html" target="_blank" class="citation">wooden dining chair</a>, <a href="https://www.alibaba.com/showroom/vietnam-furniture-manufacturer.html" target="_blank" class="citation">vietnam furniture</a>) — dùng để SMI định hình bộ câu trả lời và hồ sơ năng lực.</p>
+<div class="rfq-grid">
+<div class="rfq-card">
+<img class="rfq-img" src="https://s.alicdn.com/@sc04/kf/Haa425329622949ed8ced75564e89502ce.png_300x300.png" alt="RFQ"/>
+<div class="rfq-title">Custom Fabric Dining Chair Set cho nhà bán lẻ Mỹ</div>
+<p class="rfq-desc">Buyer cần 3–4 mẫu ghế ăn bọc vải (fabric dining chair), khung gỗ solid hoặc plywood, yêu cầu KD/flat-pack packaging và test drop. Quan tâm chứng chỉ CARB P2/TSCA Title VI, báo FOB cảng Cát Lái hoặc Hải Phòng, MOQ theo container hỗn hợp với 2–3 màu vải.</p>
+</div>
+<div class="rfq-card">
+<img class="rfq-img" src="https://s.alicdn.com/@sc04/kf/H71df3e09d4b64f4d93d78fdce9445046A.png_300x300.png" alt="RFQ"/>
+<div class="rfq-title">Barstool / Bar Stool cho chuỗi café EU</div>
+<div class="rfq-desc">Chuỗi café cần 500–800 ghế bar (bar stool) gỗ + khung kim loại, chiều cao 65–75cm, hoàn thiện chống trầy, test tải trọng. Yêu cầu pre-production sample, bản vẽ shopdrawing và tiến độ giao 2 đợt. Giá trị thầu nằm ở năng lực dự án và đồng bộ màu giữa các lô.</div>
+</div>
+<div class="rfq-card">
+<img class="rfq-img" src="https://s.alicdn.com/@sc04/kf/H98f74ddf3c26432a942cda72e3e836a9u.png_300x300.png" alt="RFQ"/>
+<div class="rfq-title">Rattan Chair Wholesale cho nhà nhập khẩu EU</div>
+<p class="rfq-desc">Importer EU tìm ghế mây tự nhiên (natural rattan chair) phong cách Japandi/natural, nguồn gỗ có trách nhiệm (FSC Chain of Custody nếu có), đan đều tay, màu ổn định giữa các lô. Yêu cầu MOQ theo màu thấp, bộ ảnh catalog và EPR/packaging data.</p>
+</div>
+<div class="rfq-card">
+<img class="rfq-img" src="https://s.alicdn.com/@sc04/kf/H1ccc9da5ac5a43ada2abbc3297378a00Y.jpg_300x300.jpg" alt="RFQ"/>
+<div class="rfq-title">Hotel Guestroom FF&amp;E — Giường + Bàn + Ghế cho dự án 120 phòng</div>
+<p class="rfq-desc">Project buyer cần gói phòng: platform bed, bedside table, desk + chair, đồng bộ finish, kèm bản vẽ, mock-up và phê duyệt sample trước sản xuất. Ưu tiên nhà cung cấp có kinh nghiệm hotel casegoods (tham khảo hồ sơ FF&amp;E La Quinta/Home2 Suites) và khả năng giao theo phase.</p>
+</div>
+<div class="rfq-card">
+<img class="rfq-img" src="https://s.alicdn.com/@sc04/kf/H45e4e9c6ae3e4d40b7b9e821880c3028z.png_300x300.png" alt="RFQ"/>
+<div class="rfq-title">Mixed Container: Table + Chairs + Cabinet Collection</div>
+<p class="rfq-desc">Importer muốn 6–10 SKU (dining table, dining chair, sideboard/cabinet) trong một 40HC để giảm rủi ro tồn kho và tối ưu cước. Nhà cung cấp cần chuẩn hóa module, vật liệu và finish dùng chung, cung cấp sơ đồ loading và CBM/SKU rõ ràng.</p>
+</div>
+<div class="rfq-card">
+<img class="rfq-img" src="https://s.alicdn.com/@sc04/kf/H8387e1ee283d457d82fb79532fbb19ffp.png_300x300.png" alt="RFQ"/>
+<div class="rfq-title">OEM/ODM Platform Bed cho reseller e-commerce</div>
+<p class="rfq-desc">Thương hiệu DTC cần OEM platform bed (ash/rubberwood), kích thước chuẩn Mỹ (Twin–King), đóng gói mail-order, hướng dẫn lắp ráp. Yêu cầu giá FOB theo tier (20/50/100 pcs), thời gian mẫu và khả năng custom màu hoàn thiện.</p>
+</div>
+</div>
+</div>
+<!-- ===== CHAPTER 6: BUYER PERSONAS & IMAGE ANALYSIS ===== -->
+<div class="section-card" id="sec6">
+<h2 class="section-title"><i class="fa-solid fa-magnifying-glass"></i> Chapter 6: Buyer Personas &amp; Image Analysis</h2>
+<h3 class="sub-title">Chân dung buyer ưu tiên</h3>
+<div class="persona-grid">
+<div class="persona-card"><h4>Importer / Wholesaler Mỹ</h4><ul><li>Mua theo container, cần giá FOB rõ và lead time ổn định</li><li>Ưu tiên KD/flat-pack packaging, giảm chi phí vận chuyển</li><li>Đòi hỏi test formaldehyde (CARB P2/TSCA Title VI), drop test</li><li>Ghế ăn và bàn ăn là 2 danh mục mua lặp lại cao nhất</li></ul></div>
+<div class="persona-card"><h4>Retail Brand / DTC EU-UK</h4><ul><li>Đặt nặng thiết kế, FSC và traceability nguồn gỗ</li><li>MOQ theo màu/SKU thấp, ưa Japandi/natural/rattan</li><li>Yêu cầu ảnh lifestyle, video ngắn và dữ liệu EPR/packaging</li><li>Kênh bán: Amazon, Wayfair, chuỗi retail nội thất</li></ul></div>
+<div class="persona-card"><h4>Hotel / Project / FF&amp;E Buyer</h4><ul><li>Mua theo bản vẽ, BOQ và hợp đồng dự án</li><li>Cần mock-up, sample phê duyệt, đồng màu và phần cứng chuẩn</li><li>Chú trọng năng lực quản lý tiến độ, giao theo phase</li><li>Giá trị thầu không chỉ ở đơn giá mà ở độ tin cậy dự án</li></ul></div>
+</div>
+<p>Nguồn tín hiệu buyer và sản phẩm: <a href="https://www.alibaba.com/showroom/wooden-dining-chair.html" target="_blank" class="citation">[Alibaba wooden dining chair]</a> và <a href="https://www.alibaba.com/trade/search?SearchText=vietnam+furniture+manufacturer" target="_blank" class="citation">[Alibaba vietnam furniture]</a>.</p>
+<h3 class="sub-title">Phân tích hình ảnh listing</h3>
+<div class="grid-2">
+<div class="info-card"><img src="https://s.alicdn.com/@sc04/kf/Haa425329622949ed8ced75564e89502ce.png_300x300.png" style="width:100%;height:220px;object-fit:contain;border-radius:8px;margin-bottom:0.75rem;"/><p><strong>Ảnh catalog ghế mây (HOMEWARE CRAFTS):</strong> nền sạch, sản phẩm trung tâm, ánh sáng đều — đạt chuẩn tối thiểu cho B2B. Điểm yếu: thiếu góc nghiêng 45°, không có ảnh chi tiết đan mây, không có ảnh kích thước/quy mô. SMI nên bổ sung bộ 7 ảnh/SKU: hero 45°, front, close-up vật liệu, kích thước, lifestyle, packaging, video 15s.</p></div>
+<div class="info-card"><img src="https://s.alicdn.com/@sc04/kf/H1ccc9da5ac5a43ada2abbc3297378a00Y.jpg_300x300.jpg" style="width:100%;height:220px;object-fit:contain;border-radius:8px;margin-bottom:0.75rem;"/><p><strong>Benchmark giường gỗ OEM (IMITI):</strong> hình chụp phòng ngủ có bối cảnh, giúp buyer hình dung tỉ lệ thật — tốt cho listing. Cần thêm ảnh joinery/chi tiết mộng và ảnh packaging để trả lời câu hỏi KD của nhà nhập khẩu. Với dòng ghế của SMI (dining chair, barstool), nên chụp 2 góc cùng lúc để khai thác đặc tính "solid wood" rõ hơn.</p></div>
+</div>
+</div>
+<!-- ===== CHAPTER 7: PRICING INTELLIGENCE ===== -->
+<div class="section-card" id="sec7">
+<h2 class="section-title"><i class="fa-solid fa-tags"></i> Chapter 7: Pricing Intelligence</h2>
+<div class="pricing-grid">
+<div class="chart-box"><canvas id="priceChart" width="700" height="350"></canvas><div class="chart-fallback" style="font-size:0.8rem;color:#7B8794;margin-top:0.5rem;">Dải benchmark (USD): Ghế 15–75; Bàn 30–79; Giường 122–240; Tủ 30–100; Sideboard 70–434; Sofa/FF&amp;E 25–720.</div></div>
+<div class="potential-box">
+<h4><i class="fa-solid fa-star"></i> Vùng giá tiềm năng của SMI</h4>
+<p>Định vị FOB đề xuất: ghế ăn/barstool US$20–80/chiếc, giường OEM US$120–250, sideboard/tủ US$120–350, sofa US$80–300. Đây là vùng giữa hàng flat-pack giá thấp (Trung Quốc) và hàng luxury thủ công — phù hợp thông điệp "designed in Vietnam, OEM-ready" với MOQ linh hoạt theo container hỗn hợp.</p>
+</div>
+</div>
+<h3 class="sub-title">Hành lang giá theo phân khúc (theo nhóm sản phẩm SMI)</h3>
+<div class="table-container">
+<table>
+<thead><tr><th>Phân khúc</th><th>Giá benchmark (USD)</th><th>MOQ quan sát</th><th>Ghi chú / nguồn</th></tr></thead>
+<tbody>
+<tr><td>Ghế (rattan / dining / armchair / adirondack)</td><td>US$15–75</td><td>2–50 pcs</td><td>Ghế mây giá thấp nhất; armchair bọc $60; <a href="https://www.alibaba.com/product-detail/Rattan-Chair-Manufacturer-Vietnam-Offering-Wholesale_10000028824516.html" target="_blank" class="citation">[Nguồn giá]</a></td></tr>
+<tr><td>Bàn (foldable dining, acacia table top)</td><td>US$30–79</td><td>1×40' / 400 pcs</td><td>Bàn gấp giá rẻ nhất; mặt bàn acacia theo tấm; <a href="https://www.alibaba.com/product-detail/Top-Grade-48x96inch-Acacia-Table-Top_10000038392078.html" target="_blank" class="citation">[Nguồn giá]</a></td></tr>
+<tr><td>Giường (platform ash / hotel bed)</td><td>US$122–240</td><td>4–30 pcs</td><td>OEM solid wood định giá theo tier; <a href="https://www.alibaba.com/product-detail/OEM-ODM-Solid-Ash-Wood-Platform_10000043161696.html" target="_blank" class="citation">[Nguồn giá]</a></td></tr>
+<tr><td>Tủ (kitchen RTA, rattan wardrobe)</td><td>US$30–100</td><td>1–500 pcs</td><td>RTA giá thấp; wardrobe mây trung bình; <a href="https://www.alibaba.com/product-detail/Vietnam-RTA-Kitchen-Cabinet-Manufacturer-Wholesale_1601595673149.html" target="_blank" class="citation">[Nguồn giá]</a></td></tr>
+<tr><td>Sideboard / tủ trang trí</td><td>US$70–434</td><td>1–100 pcs</td><td>Panel giá thấp → solid/rattan giá cao; <a href="https://www.alibaba.com/product-detail/Solid-Rubber-Wood-Sideboard-Cabinet-for_60054711800.html" target="_blank" class="citation">[Nguồn giá]</a></td></tr>
+<tr><td>Sofa &amp; FF&amp;E khách sạn</td><td>US$25–720</td><td>10–639 sets</td><td>Sofa phổ thông $25–80; gói phòng khách sạn $380–720; <a href="https://www.alibaba.com/product-detail/Modern-Holiday-Inn-Hotel-Bedroom-Furniture_10000035450512.html" target="_blank" class="citation">[Nguồn giá]</a></td></tr>
+</tbody>
+</table>
+</div>
+<p style="font-size:0.82rem;color:#7B8794;">Giá Alibaba là giá niêm yết/benchmark (FOB/ex-works) tại thời điểm khảo sát 19/08/2026; có thể thay đổi theo vật liệu, số lượng và Incoterms. Trước khi chào giá chính thức, cần xác nhận lại từng listing và tính toán chi phí logistics thực tế.</p>
+</div>
+<!-- ===== CHAPTER 8: STRATEGY & RESEARCH NOTES ===== -->
+<div class="section-card" id="sec8">
+<h2 class="section-title"><i class="fa-solid fa-rocket"></i> Chapter 8: Strategy &amp; Recommendations</h2>
+<p>Bối cảnh: SMI sở hữu 7 nhóm sản phẩm nội thất gỗ, hơn 20 năm kinh nghiệm, định vị trong chuỗi xuất khẩu gỗ Việt Nam đang tăng trưởng (US$17,2 tỷ năm 2025, Mỹ &gt;50%). Trên Alibaba, đối thủ Việt Nam đã cạnh tranh mạnh ở ghế mây, giường OEM và nội thất khách sạn — nhưng rất ít nhà cung cấp Việt Nam có bộ danh mục đầy đủ 7 nhóm như SMI. Chiến lược dưới đây tận dụng lợi thế đó: chọn ghế làm hero product, chuẩn hóa năng lực OEM/ODM, đóng bộ compliance trước khi mở rộng.</p>
+<div class="strategy-grid">
+<div class="strategy-card"><span class="strategy-no">01</span><h4>Ghế (Chairs) là Hero Product</h4><p>Ưu tiên 2 dòng mạnh nhất: dining chair bọc vải + barstool gỗ (đúng dòng SMI đang có: Palisades, Niles, Onyx Gold, Nordic). Benchmark giá FOB $20–80/chiếc, chuẩn hóa bộ 7 ảnh/SKU và video 15s. Dùng ghế làm sản phẩm kéo khách vào store, sau đó cross-sell bàn/tủ.</p></div>
+<div class="strategy-card"><span class="strategy-no">02</span><h4>OEM/ODM + câu chuyện 20 năm</h4><p>Xây thông điệp "designed in Vietnam, OEM-ready" trên trang chủ và hồ sơ supplier: ảnh xưởng, quy trình kiểm soát chất lượng, danh sách thị trường đã xuất. Buyer B2B mua nhà máy, không mua sản phẩm — hồ sơ năng lực là vũ khí chính.</p></div>
+<div class="strategy-card"><span class="strategy-no">03</span><h4>Compliance trước, bán hàng sau</h4><p>Ưu tiên FSC/BSCI/ISO cho hồ sơ supplier; CARB P2/TSCA Title VI cho thị trường Mỹ; GPSR + EPR packaging data cho EU (đúng ưu tiên GPSR đang triển khai). Chỉ công bố chứng chỉ khi có hồ sơ hợp lệ — sai sót compliance đắt hơn mất đơn.</p></div>
+<div class="strategy-card"><span class="strategy-no">04</span><h4>Kênh &amp; content B2B</h4><p>Đăng ký RFQ (mục tiêu phản hồi &lt;2h — đã là chuẩn vận hành), tối ưu showroom từ khóa "vietnam dining chair manufacturer", "oem wood bed", "bar stool factory". Duy trì 80–100 listing chia đều 7 nhóm, ưu tiên 30 listing ghế đầu tiên.</p></div>
+<div class="strategy-card"><span class="strategy-no">05</span><h4>Giá tier &amp; container hỗn hợp</h4><p>Chào giá 3 tier (20/50/100 pcs hoặc theo container) cho ghế và giường; hỗ trợ mixed container 6–10 SKU để giảm tồn kho buyer. Công bố CBM/SKU, sơ đồ loading và lead time chuẩn — 3 yếu tố quyết định thắng thầu importer.</p></div>
+<div class="strategy-card"><span class="strategy-no">06</span><h4>Đo lường theo nhóm sản phẩm</h4><p>Theo dõi Impressions → CTR → Inquiry → GMV riêng cho từng nhóm (chairs, table, cabinet...). Nhóm nào CTR &lt;1% thì sửa ảnh/title trước; nhóm nào Inquiry cao mà GMV thấp thì rà lại giá và phản hồi. Dữ liệu quyết định bước đi tiếp theo.</p></div>
+</div>
+<div class="highlight strategy-highlight">
+<strong>Kết luận:</strong> SMI có lợi thế hiếm có — một danh mục 7 nhóm hoàn chỉnh trong khi đối thủ Việt Nam trên Alibaba chỉ chuyên một phân khúc. Chiến lược đề xuất: dùng Ghế làm hero product để kéo khách, hồ sơ OEM/ODM 20 năm để chốt đơn, compliance (FSC/BSCI/CARB/GPSR) để vượt rào cản thị trường Mỹ-EU, và hệ thống đo lường theo nhóm để liên tục tối ưu. Mục tiêu năm đầu: 30 listing ghế + 3 gói RFQ thắng, doanh thu online chiếm 10–15% tổng xuất khẩu của SMI.
+</div>
+<!-- Compiled Reference List -->
+<div class="source-list" style="margin-top: 2rem; padding-top: 1.5rem; border-top: 2px solid var(--bg);">
+  <h2 class="sub-title"><i class="fa-solid fa-link"></i> Danh sách nguồn tham khảo</h2>
+  <ol style="font-size: 0.82rem; line-height: 1.8;">
+    <li><strong>Nghiên cứu thị trường:</strong> <a href="https://www.grandviewresearch.com/industry-analysis/furniture-market" target="_blank" class="citation">Grand View Research — Furniture Market 2026</a></li>
+    <li><strong>Nghiên cứu thị trường:</strong> <a href="https://www.gminsights.com/industry-analysis/wooden-furniture-market" target="_blank" class="citation">GM Insights — Wooden Furniture Market 2026</a></li>
+    <li><strong>Xuất khẩu VN:</strong> <a href="https://m.wood365.cn/News/NewsInfo_283812.html" target="_blank" class="citation">wood365/VIETRADE — Xuất khẩu gỗ VN 2025 (US$17,2 tỷ)</a></li>
+    <li><strong>Xuất khẩu VN:</strong> <a href="https://m.wood365.cn/News/NewsInfo_280893.html" target="_blank" class="citation">Viforest — Tỷ trọng thị trường Mỹ trong xuất khẩu gỗ VN</a></li>
+    <li><strong>Thị trường VN:</strong> <a href="https://www.mordorintelligence.com/industry-reports/vietnam-furniture-market" target="_blank" class="citation">Mordor Intelligence — Vietnam Furniture Market</a></li>
+    <li><strong>Thương mại quốc tế:</strong> <a href="https://www.itto.int/files/user/mis/MIS%20_16-31_January2026.pdf" target="_blank" class="citation">ITTO MIS 01/2026 — Xuất nhập khẩu gỗ thế giới</a></li>
+    <li><strong>Supplier &amp; sản phẩm:</strong> <a href="https://www.alibaba.com/trade/search?SearchText=vietnam+furniture+manufacturer" target="_blank" class="citation">Alibaba — vietnam furniture manufacturer (kết quả tìm kiếm)</a></li>
+    <li><strong>Sản phẩm tủ:</strong> <a href="https://www.alibaba.com/catalog/sideboards_cid37033001" target="_blank" class="citation">Alibaba — Sideboards catalog</a></li>
+    <li><strong>Keyword ghế:</strong> <a href="https://www.alibaba.com/showroom/wooden-dining-chair.html" target="_blank" class="citation">Alibaba Showroom — wooden dining chair</a></li>
+    <li><strong>Doanh nghiệp:</strong> <a href="https://smifurniture.com/" target="_blank" class="citation">SMI Furniture — Website chính thức</a></li>
+  </ol>
+</div>
+<!-- Research Notes -->
+<div class="research-notes">
+<h3><i class="fa-solid fa-magnifying-glass-chart"></i> Ghi chú nghiên cứu</h3>
+<div class="table-container">
+<table class="source-table">
+<thead><tr><th>Nguồn đã truy cập</th><th>Dữ liệu sử dụng</th><th>Link</th></tr></thead>
+<tbody>
+<tr><td>Alibaba — tìm kiếm "vietnam furniture manufacturer" (19/08/2026)</td><td>16 supplier Việt Nam, 30+ sản phẩm, giá, MOQ, số năm hoạt động</td><td><a href="https://www.alibaba.com/trade/search?SearchText=vietnam+furniture+manufacturer" rel="noopener" target="_blank">Mở nguồn</a></td></tr>
+<tr><td>SMI Furniture website</td><td>7 nhóm sản phẩm (table, chairs, cabinet, bed, shelf, khung-guong, others); dòng ghế cụ thể</td><td><a href="https://smifurniture.com/" rel="noopener" target="_blank">Mở nguồn</a></td></tr>
+<tr><td>Grand View Research / GM Insights</td><td>Quy mô thị trường nội thất toàn cầu 2025–2026, CAGR nội thất gỗ</td><td><a href="https://www.grandviewresearch.com/industry-analysis/furniture-market" rel="noopener" target="_blank">Mở nguồn</a></td></tr>
+<tr><td>wood365 / VIETRADE &amp; Viforest</td><td>Xuất khẩu gỗ VN 2025 (US$17,2 tỷ), tỷ trọng Mỹ &gt;50%</td><td><a href="https://m.wood365.cn/News/NewsInfo_283812.html" rel="noopener" target="_blank">Mở nguồn</a></td></tr>
+<tr><td>ITTO MIS 01/2026</td><td>Xuất/nhập khẩu gỗ thế giới 2020–2025* (cơ sở ước tính tỷ trọng quốc gia)</td><td><a href="https://www.itto.int/files/user/mis/MIS%20_16-31_January2026.pdf" rel="noopener" target="_blank">Mở nguồn</a></td></tr>
+<tr><td>Report SMI cabinet trước đó (b2b-reports)</td><td>12 sản phẩm sideboard + 4 supplier toàn cầu đã xác minh</td><td><a href="https://www.alibaba.com/catalog/sideboards_cid37033001" rel="noopener" target="_blank">Mở nguồn</a></td></tr>
+</tbody>
+</table>
+</div>
+<h4 style="margin-top:1rem">Truy vấn đã dùng</h4>
+<ul style="padding-left:1.2rem;font-size:.8rem">
+<li><code>vietnam furniture manufacturer alibaba</code></li>
+<li><code>wooden dining chair vietnam</code></li>
+<li><code>wooden bar stool alibaba</code></li>
+<li><code>global furniture market size 2025 2026 forecast CAGR</code></li>
+<li><code>Vietnam furniture export 2025 value billion wood</code></li>
+<li><code>wooden furniture market CAGR 2026</code></li>
+</ul>
+<p style="font-size:.78rem;margin-top:1rem"><strong>Phương pháp:</strong> dữ liệu thị trường là số liệu công bố 2025–2026 của các hãng nghiên cứu; tỷ trọng xuất/nhập khẩu theo quốc gia là ước tính định hướng từ ITTO + dữ liệu ngành; giá/MOQ là snapshot listing Alibaba ngày 19/08/2026 và cần xác nhận lại trước giao dịch. Chứng chỉ chỉ nên được SMI công bố khi có hồ sơ hợp lệ.</p>
+</div>
+</div>
+<!-- ===== FOOTER ===== -->
+<footer>
+<div class="footer-grid">
+<div class="footer-brand-block">
+<div class="footer-logo"><i class="fa-solid fa-leaf"></i><span>Báo cáo thị trường B2B</span></div>
+<p>Báo cáo tổng hợp ngành nội thất gỗ và nhóm sản phẩm SMI Furniture — dữ liệu thị trường 2025–2026, benchmark nhà cung cấp và sản phẩm Alibaba.com, phục vụ chiến lược xuất khẩu B2B của SMI.</p>
+</div>
+<div class="footer-contact-card">
+<h3>Liên hệ người lập báo cáo</h3>
+<p class="fc-name">Thu Hiền (秋贤)</p>
+<a class="footer-action" href="mailto:tranthith02437180@alibaba-inc.com?subject=Phản%20hồi%20báo%20cáo%20ngành%20nội%20thất%20SMI"><i class="fa-solid fa-envelope"></i><span>tranthith02437180@alibaba-inc.com</span></a>
+<a class="footer-action" href="tel:0862850936"><i class="fa-solid fa-phone"></i><span>0862850936</span></a>
+</div>
+</div>
+<div class="foot-bottom"><span>&copy; 2026 Alibaba B2B Expert</span><span>Ngôn ngữ: Tiếng Việt</span></div>
+</footer>
+</div>
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+    function initChart(canvasId, config) {
+      var canvas = document.getElementById(canvasId); if (!canvas) return null;
+      config.options = config.options || {};
+      config.options.responsive = true;
+      config.options.maintainAspectRatio = false;
+      config.options.layout = config.options.layout || { padding: 12 };
+      config.options.plugins = config.options.plugins || {};
+      var legendDefaults = { position: 'bottom', labels: { boxWidth: 18, padding: 18, font: { size: 12, family: 'Lexend' } } };
+      var legendUser = config.options.plugins.legend || {};
+      config.options.plugins.legend = Object.assign({}, legendDefaults, legendUser);
+      if (legendUser.labels) { config.options.plugins.legend.labels = Object.assign({}, legendDefaults.labels, legendUser.labels); }
+      if (legendUser.labels && legendUser.labels.font) { config.options.plugins.legend.labels.font = Object.assign({}, legendDefaults.labels.font, legendUser.labels.font); }
+      var titleDefaults = { padding: { bottom: 18 }, color: '#002B5B', font: { size: 16, weight: '700', family: 'Lexend' } };
+      var titleUser = config.options.plugins.title || {};
+      config.options.plugins.title = Object.assign({}, titleDefaults, titleUser);
+      if (titleUser.font) { config.options.plugins.title.font = Object.assign({}, titleDefaults.font, titleUser.font); }
+      config.options.scales = config.options.scales || {};
+      var scaleFontDefault = { family: 'Lexend', size: 11 };
+      ['x', 'y'].forEach(function(axis) {
+        config.options.scales[axis] = config.options.scales[axis] || {};
+        config.options.scales[axis].ticks = config.options.scales[axis].ticks || {};
+        config.options.scales[axis].ticks.font = Object.assign({}, scaleFontDefault, config.options.scales[axis].ticks.font || {});
+      });
+      return new Chart(canvas.getContext('2d'), config);
+    }
+    try {
+      // Market Share Doughnut (Chapter 2) - ước tính thị phần nội thất gỗ toàn cầu 2026
+      initChart('shareChart', { type: 'doughnut', data: { labels: ['Trung Quốc','Việt Nam','Ý','Ba Lan','Đức','Khác'], datasets: [{ data: [38,13,7,6,5,31], backgroundColor:['#D4A017','#1F75FE','#27AE60','#E0E6F2','#8B4513','#B0BEC5'] }] }, options: { plugins: { title: { display: true, text: 'Thị phần nội thất gỗ toàn cầu (%) — ước tính 2026', font: {size: 16, family: 'Lexend'} } } } });
+      // Growth Line Chart (Chapter 2) - thị trường nội thất gỗ toàn cầu (tỷ USD)
+      initChart('growthChart', { type: 'line', data: { labels: ['2023','2024','2025','2026'], datasets: [{ label: 'Nội thất gỗ toàn cầu (tỷ USD)', data: [380,398,417.5,434.7], borderColor: '#1F75FE', tension: 0.3, fill: true, backgroundColor: 'rgba(31,117,254,0.08)' }] }, options: { plugins: { title: { display: true, text: 'Tăng trưởng thị trường nội thất gỗ (tỷ USD)', font: {size: 16, family: 'Lexend'} } }, scales: { x: { ticks: { font: { family: 'Lexend', size: 11 } } }, y: { ticks: { font: { family: 'Lexend', size: 11 } } } } } });
+      // Top Exporting Countries Horizontal Bar (Chapter 2)
+      initChart('exportCountriesChart', { type: 'bar', data: { labels: ['Trung Quốc','Việt Nam','Ý','Ba Lan','Đức','Indonesia','Malaysia','Mexico'], datasets: [{ label: 'Ước tính thị phần xuất khẩu (%)', data: [38,13,7,6,5,4,3,2], backgroundColor: '#27AE60' }] }, options: { indexAxis: 'y', plugins: { title: { display: true, text: 'Top quốc gia xuất khẩu nội thất gỗ', font: {size: 16, family: 'Lexend'} } }, scales: { x: { ticks: { font: { family: 'Lexend', size: 11 } } }, y: { ticks: { font: { family: 'Lexend', size: 11 } } } } } });
+      // Top Importing Countries Horizontal Bar (Chapter 2)
+      initChart('importCountriesChart', { type: 'bar', data: { labels: ['Mỹ','Đức','Anh','Pháp','Nhật','Canada','Úc','Hà Lan'], datasets: [{ label: 'Ước tính tỷ trọng nhập khẩu (%)', data: [38,9,8,7,5,4,3,3], backgroundColor: '#D4A017' }] }, options: { indexAxis: 'y', plugins: { title: { display: true, text: 'Top thị trường nhập khẩu nội thất gỗ', font: {size: 16, family: 'Lexend'} } }, scales: { x: { ticks: { font: { family: 'Lexend', size: 11 } } }, y: { ticks: { font: { family: 'Lexend', size: 11 } } } } } });
+      // Pricing Bar Chart (Chapter 7)
+      initChart('priceChart', { type: 'bar', data: { labels: ['Ghế','Bàn','Giường','Tủ','Sideboard','Sofa/FF&E'], datasets: [{ label: 'Giá thấp (USD)', data: [15,30,122,30,70,25], backgroundColor: '#E0E6F2' },{ label: 'Giá cao (USD)', data: [75,79,240,100,434,720], backgroundColor: '#1F75FE' }] }, options: { scales: { y: { beginAtZero: true, ticks: { callback: function(value) { return '$' + value; }, font: { family: 'Lexend', size: 11 } } }, x: { ticks: { font: { family: 'Lexend', size: 11 } } } }, plugins: { title: { display: true, text: 'Dải giá benchmark theo nhóm sản phẩm (USD)', font: {size: 16, family: 'Lexend'} } } } });
+    } catch(e) { console.error(e); }
+  </script>
+</body>
+</html>
