@@ -53,6 +53,17 @@
     .chart-box canvas { width: 100% !important; height: 330px !important; }
     .chart-box.wide { min-height: 420px; margin-top: 1.2rem; }
     .chart-box.wide canvas { height: 320px !important; }
+    .static-chart { width:100%; min-height:310px; display:flex; align-items:center; justify-content:center; color:#334155; font-family:'Lexend',sans-serif; }
+    .static-chart h4 { color:var(--p); text-align:center; margin-bottom:1rem; font-size:.95rem; }
+    .donut-static { width:210px; height:210px; border-radius:50%; background:conic-gradient(#D4A017 0 38%,#1F75FE 38% 51%,#27AE60 51% 58%,#8B4513 58% 64%,#94A3B8 64% 69%,#E0E6F2 69% 100%); position:relative; }
+    .donut-static:after { content:'2026'; position:absolute; inset:48px; border-radius:50%; background:#fff; display:flex; align-items:center; justify-content:center; color:var(--p); font-weight:800; }
+    .legend-static { display:grid; grid-template-columns:repeat(2,minmax(110px,1fr)); gap:.45rem .8rem; margin-left:1.4rem; font-size:.72rem; }
+    .legend-static span:before { content:''; display:inline-block; width:10px; height:10px; border-radius:2px; background:var(--c); margin-right:6px; }
+    .bar-static { width:100%; padding:.5rem 1rem; }
+    .bar-row { display:grid; grid-template-columns:95px 1fr 52px; gap:.6rem; align-items:center; margin:.58rem 0; font-size:.72rem; }
+    .bar-track { height:18px; background:#E8EDF5; border-radius:8px; overflow:hidden; }
+    .bar-fill { height:100%; width:var(--w); background:var(--bar,#27AE60); border-radius:8px; }
+    .line-static { width:100%; height:285px; }
     .chart-insight { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-bottom: 1.2rem; }
     .insight-pill { background: #F4F7FB; border: 1px solid rgba(0,43,91,0.06); border-radius: 12px; padding: 0.9rem 1rem; }
     .insight-pill strong { display: block; font-size: 1.35rem; color: var(--p); line-height: 1.1; }
@@ -156,8 +167,8 @@
 </div>
 <!-- Charts: Market Share + Growth -->
 <div class="market-chart-grid">
-<div class="chart-box"><canvas id="shareChart" width="700" height="350"></canvas></div>
-<div class="chart-box"><canvas id="growthChart" width="700" height="350"></canvas></div>
+<div class="chart-box"><canvas id="shareChart" width="700" height="350"></canvas><div class="static-chart"><div class="donut-static"></div><div class="legend-static"><span style="--c:#D4A017">Trung Quốc 38%</span><span style="--c:#1F75FE">Việt Nam 13%</span><span style="--c:#27AE60">Ý 7%</span><span style="--c:#8B4513">Ba Lan 6%</span><span style="--c:#94A3B8">Đức 5%</span><span style="--c:#E0E6F2">Khác 31%</span></div></div></div>
+<div class="chart-box"><canvas id="growthChart" width="700" height="350"></canvas><div class="static-chart"><svg class="line-static" viewBox="0 0 600 285" role="img" aria-label="Tăng trưởng thị trường nội thất gỗ"><text x="300" y="22" text-anchor="middle" font-weight="700" fill="#002B5B">Tăng trưởng nội thất gỗ toàn cầu (tỷ USD)</text><line x1="60" y1="240" x2="570" y2="240" stroke="#94A3B8"/><line x1="60" y1="45" x2="60" y2="240" stroke="#94A3B8"/><polyline points="70,205 230,165 390,120 555,65" fill="none" stroke="#1F75FE" stroke-width="5"/><g fill="#1F75FE"><circle cx="70" cy="205" r="6"/><circle cx="230" cy="165" r="6"/><circle cx="390" cy="120" r="6"/><circle cx="555" cy="65" r="6"/></g><g font-size="12" fill="#475569" text-anchor="middle"><text x="70" y="260">2023 · 380</text><text x="230" y="260">2024 · 398</text><text x="390" y="260">2025 · 417,5</text><text x="540" y="260">2026 · 434,7</text></g></svg></div></div>
 </div>
 <!-- Top Exporting Countries -->
 <h3 class="sub-title"><i class="fa-solid fa-truck-fast"></i> Các quốc gia xuất khẩu nội thất gỗ hàng đầu (Nhà sản xuất)</h3>
@@ -177,7 +188,7 @@
 </table>
 </div>
 <!-- Exporting Countries Chart -->
-<div class="chart-box wide"><canvas id="exportCountriesChart" width="700" height="350"></canvas></div>
+<div class="chart-box wide"><canvas id="exportCountriesChart" width="700" height="350"></canvas><div class="static-chart"><div class="bar-static"><h4>Top quốc gia xuất khẩu nội thất gỗ — thị phần ước tính</h4><div class="bar-row"><b>Trung Quốc</b><div class="bar-track"><div class="bar-fill" style="--w:95%"></div></div><span>38%</span></div><div class="bar-row"><b>Việt Nam</b><div class="bar-track"><div class="bar-fill" style="--w:33%"></div></div><span>13%</span></div><div class="bar-row"><b>Ý</b><div class="bar-track"><div class="bar-fill" style="--w:18%"></div></div><span>7%</span></div><div class="bar-row"><b>Ba Lan</b><div class="bar-track"><div class="bar-fill" style="--w:15%"></div></div><span>6%</span></div><div class="bar-row"><b>Đức</b><div class="bar-track"><div class="bar-fill" style="--w:13%"></div></div><span>5%</span></div><div class="bar-row"><b>Indonesia</b><div class="bar-track"><div class="bar-fill" style="--w:10%"></div></div><span>4%</span></div></div></div></div>
 <!-- Top Importing Countries -->
 <h3 class="sub-title"><i class="fa-solid fa-cart-shopping"></i> Các thị trường nhập khẩu hàng đầu (Người mua)</h3>
 <div class="table-container">
@@ -196,7 +207,7 @@
 </table>
 </div>
 <!-- Importing Countries Chart -->
-<div class="chart-box wide"><canvas id="importCountriesChart" width="700" height="350"></canvas></div>
+<div class="chart-box wide"><canvas id="importCountriesChart" width="700" height="350"></canvas><div class="static-chart"><div class="bar-static"><h4>Top thị trường nhập khẩu nội thất gỗ — tỷ trọng ước tính</h4><div class="bar-row"><b>Mỹ</b><div class="bar-track"><div class="bar-fill" style="--w:95%;--bar:#D4A017"></div></div><span>38%</span></div><div class="bar-row"><b>Đức</b><div class="bar-track"><div class="bar-fill" style="--w:23%;--bar:#D4A017"></div></div><span>9%</span></div><div class="bar-row"><b>Anh</b><div class="bar-track"><div class="bar-fill" style="--w:20%;--bar:#D4A017"></div></div><span>8%</span></div><div class="bar-row"><b>Pháp</b><div class="bar-track"><div class="bar-fill" style="--w:18%;--bar:#D4A017"></div></div><span>7%</span></div><div class="bar-row"><b>Nhật</b><div class="bar-track"><div class="bar-fill" style="--w:13%;--bar:#D4A017"></div></div><span>5%</span></div><div class="bar-row"><b>Canada</b><div class="bar-track"><div class="bar-fill" style="--w:10%;--bar:#D4A017"></div></div><span>4%</span></div></div></div></div>
 <p style="font-size:0.8rem;color:#7B8794;">Ghi chú: tỷ trọng xuất/nhập khẩu là ước tính định hướng dựa trên dữ liệu ITTO 2020–2025 <a href="https://www.itto.int/files/user/mis/MIS%20_16-31_January2026.pdf" target="_blank" class="citation">[Nguồn]</a>, GM Insights <a href="https://www.gminsights.com/industry-analysis/wooden-furniture-market" target="_blank" class="citation">[Nguồn]</a> và báo cáo xuất khẩu gỗ VN 2025 <a href="https://m.wood365.cn/News/NewsInfo_283812.html" target="_blank" class="citation">[Nguồn]</a>. Số liệu cụ thể theo giao dịch cần xác nhận thêm tại ITC Trade Map.</p>
 </div>
 <!-- ===== CHAPTER 3: SUPPLIER LANDSCAPE ===== -->
@@ -344,7 +355,7 @@
 <div class="section-card" id="sec7">
 <h2 class="section-title"><i class="fa-solid fa-tags"></i> Chapter 7: Pricing Intelligence</h2>
 <div class="pricing-grid">
-<div class="chart-box"><canvas id="priceChart" width="700" height="350"></canvas><div class="chart-fallback" style="font-size:0.8rem;color:#7B8794;margin-top:0.5rem;">Dải benchmark (USD): Ghế 15–75; Bàn 30–79; Giường 122–240; Tủ 30–100; Sideboard 70–434; Sofa/FF&amp;E 25–720.</div></div>
+<div class="chart-box"><canvas id="priceChart" width="700" height="350"></canvas><div class="static-chart"><div class="bar-static"><h4>Dải giá benchmark theo nhóm sản phẩm (USD)</h4><div class="bar-row"><b>Ghế</b><div class="bar-track"><div class="bar-fill" style="--w:10%;--bar:#1F75FE"></div></div><span>15–75</span></div><div class="bar-row"><b>Bàn</b><div class="bar-track"><div class="bar-fill" style="--w:11%;--bar:#1F75FE"></div></div><span>30–79</span></div><div class="bar-row"><b>Giường</b><div class="bar-track"><div class="bar-fill" style="--w:33%;--bar:#1F75FE"></div></div><span>122–240</span></div><div class="bar-row"><b>Tủ</b><div class="bar-track"><div class="bar-fill" style="--w:14%;--bar:#1F75FE"></div></div><span>30–100</span></div><div class="bar-row"><b>Sideboard</b><div class="bar-track"><div class="bar-fill" style="--w:60%;--bar:#1F75FE"></div></div><span>70–434</span></div><div class="bar-row"><b>Sofa/FF&amp;E</b><div class="bar-track"><div class="bar-fill" style="--w:100%;--bar:#1F75FE"></div></div><span>25–720</span></div></div></div><div class="chart-fallback" style="font-size:0.8rem;color:#7B8794;margin-top:0.5rem;">Dải benchmark (USD): Ghế 15–75; Bàn 30–79; Giường 122–240; Tủ 30–100; Sideboard 70–434; Sofa/FF&amp;E 25–720.</div></div>
 <div class="potential-box">
 <h4><i class="fa-solid fa-star"></i> Vùng giá tiềm năng của SMI</h4>
 <p>Định vị FOB đề xuất: ghế ăn/barstool US$20–80/chiếc, giường OEM US$120–250, sideboard/tủ US$120–350, sofa US$80–300. Đây là vùng giữa hàng flat-pack giá thấp (Trung Quốc) và hàng luxury thủ công — phù hợp thông điệp "designed in Vietnam, OEM-ready" với MOQ linh hoạt theo container hỗn hợp.</p>
@@ -467,7 +478,10 @@
         config.options.scales[axis].ticks = config.options.scales[axis].ticks || {};
         config.options.scales[axis].ticks.font = Object.assign({}, scaleFontDefault, config.options.scales[axis].ticks.font || {});
       });
-      return new Chart(canvas.getContext('2d'), config);
+      var renderedChart = new Chart(canvas.getContext('2d'), config);
+      var staticFallback = canvas.parentElement && canvas.parentElement.querySelector('.static-chart');
+      if (staticFallback) staticFallback.style.display = 'none';
+      return renderedChart;
     }
     try {
       // Market Share Doughnut (Chapter 2) - ước tính thị phần nội thất gỗ toàn cầu 2026
